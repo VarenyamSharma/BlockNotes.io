@@ -1,11 +1,16 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ChevronLeft, MenuIcon } from "lucide-react";
+import { ChevronLeft, MenuIcon, PlusCircle } from "lucide-react";
 import { usePathname } from "next/navigation";
 import React, { ElementRef, useRef, useState, useEffect } from "react";
 import { useMediaQuery } from "usehooks-ts";
-import {UserItem }from "./user-item";
+import { UserItem } from "./user-item";
+import { useMutation, useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { Item } from "./item";
+import { toast } from "sonner";
+
 
 const Navigation = () => {
   const pathname = usePathname();
@@ -15,6 +20,8 @@ const Navigation = () => {
   const navbarRef = useRef<ElementRef<"div">>(null);
   const [isResetting, setIsResetting] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(isMobile);
+  const forms = useQuery(api.forms.get, {});
+  const create = useMutation(api.forms.create);
 
   useEffect(() => {
     if (isMobile) {
@@ -23,7 +30,7 @@ const Navigation = () => {
       resetWidth();
     }
   }, [isMobile]);
-  
+
   useEffect(() => {
     if (isMobile) {
       collapse();
@@ -109,6 +116,15 @@ const Navigation = () => {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [isCollapsed]);
 
+  const handleCreate = () => {
+    const promise = create({title: "Untitled"});
+    toast.promise(promise, {
+      loading: "Creating...",
+      success: "Form created successfully!",
+      error: "Failed to create."
+    });
+  };
+
   return (
     <>
       {/* Sidebar */}
@@ -134,9 +150,15 @@ const Navigation = () => {
         {/* Sidebar content */}
         <div>
           <UserItem />
+          <Item
+            onClick={handleCreate} 
+            label="New Form" icon={PlusCircle}
+          />
         </div>
         <div className="mt-4">
-          <p>Forms</p>
+          {forms?.map((form) => (
+            <p key={form._id}>{form.title}</p>
+          ))}
         </div>
 
         {/* Resize handle (desktop only) */}
