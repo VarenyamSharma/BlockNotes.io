@@ -1,15 +1,16 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ChevronLeft, MenuIcon, PlusCircle } from "lucide-react";
+import { ChevronLeft, MenuIcon, PlusCircle, Search, Settings } from "lucide-react";
 import { usePathname } from "next/navigation";
 import React, { ElementRef, useRef, useState, useEffect } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { UserItem } from "./user-item";
-import { useMutation, useQuery } from "convex/react";
+import { useMutation,  } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Item } from "./item";
 import { toast } from "sonner";
+import DocumentList from "./DocumentList";
 
 
 const Navigation = () => {
@@ -20,7 +21,6 @@ const Navigation = () => {
   const navbarRef = useRef<ElementRef<"div">>(null);
   const [isResetting, setIsResetting] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(isMobile);
-  const forms = useQuery(api.forms.get, {});
   const create = useMutation(api.forms.create);
 
   useEffect(() => {
@@ -150,15 +150,15 @@ const Navigation = () => {
         {/* Sidebar content */}
         <div>
           <UserItem />
+          <Item  label="Search" icon={Search} isSearch onClick={() => {} }/>
+            <Item  label="Settings" icon={Settings} onClick={() => {} } />
           <Item
             onClick={handleCreate} 
             label="New Form" icon={PlusCircle}
           />
         </div>
         <div className="mt-4">
-          {forms?.map((form) => (
-            <p key={form._id}>{form.title}</p>
-          ))}
+          <DocumentList />
         </div>
 
         {/* Resize handle (desktop only) */}
