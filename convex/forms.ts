@@ -74,3 +74,86 @@ export const create = mutation({
     return form;
   },
 });
+
+export const getTrash = query({
+  handler: async (ctx) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) throw new Error("Not authenticated");
+    const userId = identity.subject;
+
+    const TrashDocument = await ctx.db
+      .query("forms")
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .filter((q) => q.eq(q.field("isArchived"), true))
+      .order("desc")
+      .collect();
+    
+
+    return TrashDocument;
+  },
+});
+
+export const restore = mutation({
+  args: {
+    documentId: v.id("forms"),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) throw new Error("Not authenticated");
+    const userId = identity.subject;
+    const existingForm = await ctx.db.get(args.documentId);
+    if (!existingForm) throw new Error("Form not found");
+    if (existingForm.userId !== userId) throw new Error("Not authorized");
+    
+    const options: Partial<Doc<"forms">> = { isArchived: false };
+
+    if(existingForm.parentDocument) {
+      const parentForm = await ctx.db.get(existingForm.parentDocument);
+      if(parentForm?.isArchived) {
+        options.parentDocument = undefined;
+      }
+    }
+
+    await ctx.db.patch(args.documentId, options);
+
+    return existingForm;
+  },
+});
+
+export const remove = mutation({
+  args: {
+    documentId: v.id("forms"),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) throw new Error("Not authenticated");
+
+    const userId = identity.subject;
+
+    const existingForm = await ctx.db.get(args.documentId);
+    if (!existingForm) throw new Error("Form not found");
+    if (existingForm.userId !== userId) throw new Error("Not authorized");    
+
+    const document = await ctx.db.delete(args.documentId);
+    return document;
+  }
+});
+
+export const getSearch = query({
+  handler: async (ctx) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) throw new Error("Not authenticated");
+    const userId = identity.subject;
+
+    const documents = await ctx.db
+      .query("forms")
+      .withIndex("by_user", (q)=> q.eq("userId", userId))
+      .filter((q) => q.eq(q.field("isArchived"), false),
+    )
+    .order("desc")
+    .collect()
+
+    return documents;
+  }
+
+});

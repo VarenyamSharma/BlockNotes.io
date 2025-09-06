@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ChevronLeft, MenuIcon, PlusCircle, Search, Settings } from "lucide-react";
+import { ChevronLeft, MenuIcon, PlusCircle, Search, Settings, Trash } from "lucide-react";
 import { usePathname } from "next/navigation";
 import React, { ElementRef, useRef, useState, useEffect } from "react";
 import { useMediaQuery } from "usehooks-ts";
@@ -11,9 +11,17 @@ import { api } from "@/convex/_generated/api";
 import { Item } from "./item";
 import { toast } from "sonner";
 import DocumentList from "./DocumentList";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Trashbox } from "./Trashbox";
+import { useSearch } from "@/hooks/use-search";
 
 
 const Navigation = () => {
+  const search = useSearch();
   const pathname = usePathname();
   const isMobile = useMediaQuery("(max-width: 768px)");
   const isResizingRef = useRef(false);
@@ -150,15 +158,25 @@ const Navigation = () => {
         {/* Sidebar content */}
         <div>
           <UserItem />
-          <Item  label="Search" icon={Search} isSearch onClick={() => {} }/>
+          <Item  label="Search" icon={Search} isSearch onClick={search.onOpen}/>
             <Item  label="Settings" icon={Settings} onClick={() => {} } />
           <Item
             onClick={handleCreate} 
             label="New Form" icon={PlusCircle}
           />
         </div>
+
         <div className="mt-4">
           <DocumentList />
+
+          <Popover>
+            <PopoverTrigger className="w-full mt-4"> 
+              <Item label="Trash" icon={Trash} />
+            </PopoverTrigger>
+            <PopoverContent side={isMobile ? "bottom" : "right"} className="p-0 w-72">
+              <Trashbox />
+            </PopoverContent>
+          </Popover>
         </div>
 
         {/* Resize handle (desktop only) */}
