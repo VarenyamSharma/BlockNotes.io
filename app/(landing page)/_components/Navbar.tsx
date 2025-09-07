@@ -12,11 +12,11 @@ import { Spinner } from "@/components/spinner";
 import Link from "next/link";
 
 const Navbar = () => {
-  const {isAuthenticated, isLoading} = useConvexAuth();
+  const { isAuthenticated, isLoading } = useConvexAuth();
   const scrolled = useScrollTop(10);
 
   return (
-     <div
+    <div
       className={cn(
         "z-50 bg-background dark:bg-[#0C0C0C] fixed top-0 flex items-center w-full p-6",
         scrolled && "border-b shadow-sm"
@@ -24,35 +24,31 @@ const Navbar = () => {
     >
       <Logo />
       <div className="md:ml-auto md:justify-end justify-between w-full flex items-center gap-x-2">
-         {isLoading && (
-          <Spinner/>
-         )}
+        {isLoading && <Spinner />}
 
-         {!isAuthenticated && !isLoading && (
-          <> 
-          <SignInButton mode="modal">
-            <Button variant="ghost" size="sm">
-              Sign In
-            </Button>
-          </SignInButton>
-
-           <SignInButton mode="modal">
-            <Button variant="ghost" size="sm">
-             Get Started for Free
-            </Button>
-          </SignInButton>
-          </>
-          )}
-          {isAuthenticated && !isLoading && (
-            <>
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/forms">
-                Create Forms
-                </Link>
+        {!isAuthenticated && !isLoading && (
+          <>
+            <SignInButton mode="modal">
+              <Button variant="ghost" size="sm">
+                Sign In
               </Button>
-              <UserButton afterSignOutUrl="/" />
-            </>
-          )}
+            </SignInButton>
+
+            <SignInButton mode="modal">
+              <Button variant="ghost" size="sm">
+                Get Started for Free
+              </Button>
+            </SignInButton>
+          </>
+        )}
+        {isAuthenticated && !isLoading && (
+          <>
+            <Button variant="ghost" size="sm" asChild>
+              <Link href="/forms">Create Forms</Link>
+            </Button>
+            <UserButton afterSignOutUrl="/" />
+          </>
+        )}
         <ModeToggle />
       </div>
     </div>

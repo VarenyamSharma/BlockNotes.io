@@ -1,6 +1,7 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { Doc, Id } from "./_generated/dataModel";
+import { error } from "console";
 
 export const archive = mutation({
   args: {
@@ -87,7 +88,6 @@ export const getTrash = query({
       .filter((q) => q.eq(q.field("isArchived"), true))
       .order("desc")
       .collect();
-    
 
     return TrashDocument;
   },
@@ -104,12 +104,12 @@ export const restore = mutation({
     const existingForm = await ctx.db.get(args.documentId);
     if (!existingForm) throw new Error("Form not found");
     if (existingForm.userId !== userId) throw new Error("Not authorized");
-    
+
     const options: Partial<Doc<"forms">> = { isArchived: false };
 
-    if(existingForm.parentDocument) {
+    if (existingForm.parentDocument) {
       const parentForm = await ctx.db.get(existingForm.parentDocument);
-      if(parentForm?.isArchived) {
+      if (parentForm?.isArchived) {
         options.parentDocument = undefined;
       }
     }
@@ -132,11 +132,11 @@ export const remove = mutation({
 
     const existingForm = await ctx.db.get(args.documentId);
     if (!existingForm) throw new Error("Form not found");
-    if (existingForm.userId !== userId) throw new Error("Not authorized");    
+    if (existingForm.userId !== userId) throw new Error("Not authorized");
 
     const document = await ctx.db.delete(args.documentId);
     return document;
-  }
+  },
 });
 
 export const getSearch = query({
@@ -147,13 +147,77 @@ export const getSearch = query({
 
     const documents = await ctx.db
       .query("forms")
-      .withIndex("by_user", (q)=> q.eq("userId", userId))
-      .filter((q) => q.eq(q.field("isArchived"), false),
-    )
-    .order("desc")
-    .collect()
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .filter((q) => q.eq(q.field("isArchived"), false))
+      .order("desc")
+      .collect();
 
     return documents;
-  }
+  },
+});
 
+export const getById = query({
+  args: { documentId: v.id("forms") },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    const document = await ctx.db.get(args.documentId);
+
+    if (!document) {
+      throw new Error("not found");
+    }
+
+    if (document.isPublished && !document.isArchived) {
+      return document;
+    }
+
+    if (!identity) {
+      throw new Error("not authenticated");
+    }
+
+    const userId = identity.subject;
+
+    if (document.userId !== userId) {
+      throw new Error("unauthorized");
+    }
+
+    return document;
+  },
+});
+
+export const update = mutation({
+  args: {
+    id: v.id("forms"),
+    title: v.optional(v.string()),
+    content: v.optional(v.string()),
+    coverImage: v.optional(v.string()),
+    icon: v.optional(v.string()),
+    isPublished: v.optional(v.boolean()),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new Error("Unauthenticated");
+    }
+
+    const userid = identity.subject;
+
+    const { id, ...rest } = args;
+
+    const existingForm = await ctx.db.get(args.id);
+
+    if (!existingForm) {
+      throw new Error("not found");
+    }
+
+    if (existingForm.userId !== userid) {
+      throw new Error("not authorized");
+    }
+
+    const document = await ctx.db.patch(args.id, {
+      ...rest,
+    });
+
+    return document;
+  },
 });
