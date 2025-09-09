@@ -1,9 +1,34 @@
-import React from 'react'
+"use client";
 
-const formIdPage = () => {
-  return (
-    <div>formIdPage</div>
-  )
+import { api } from "@/convex/_generated/api";
+import { Id } from "@/convex/_generated/dataModel";
+import { useQuery } from "convex/react";
+import React from "react";
+interface DocumentIdPageProps {
+  params: {
+    documentId: Id<"forms">;
+  };
 }
 
-export default formIdPage
+const formIdPage = ({ params }: DocumentIdPageProps) => {
+  const document = useQuery(api.forms.getById, {
+    documentId: params.documentId,
+  });
+
+  if (document === undefined) {
+    return <div>Loading...</div>;
+  }
+
+  if (document === null) {
+    return <div>Not Found</div>;
+  }
+
+  return (
+  <div className="pb-40">
+    <div className="md:max-w-3xl">
+
+    </div>
+  </div>);
+};
+
+export default formIdPage;
