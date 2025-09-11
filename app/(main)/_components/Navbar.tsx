@@ -5,6 +5,7 @@ import { Id } from '@/convex/_generated/dataModel';
 import { useQuery } from 'convex/react';
 import { MenuIcon } from 'lucide-react';
 import { useParams } from 'next/navigation';
+import { sanitizeId } from '@/lib/utils';
 import React from 'react'
 import { Title } from './title';
 import { Spinner } from '@/components/spinner';
@@ -17,9 +18,8 @@ interface NavbarProps {
 
 export const Navbar = ({isCollapsed, onResetWidth}: NavbarProps) => {
     const params = useParams();
-    const document = useQuery(api.forms.getById, {
-        documentId: params.formId as Id<"forms">
-    });
+    const safeId = sanitizeId(params.formId)
+    const document = useQuery(api.forms.getById, safeId ? { documentId: safeId as Id<"forms"> } : "skip");
 
     if (document === undefined){
         return (

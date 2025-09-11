@@ -30,21 +30,20 @@ export const Toolbar = ({ initialData, preview }: ToolbarProps) => {
         </div>
       )}
       {!!initialData.icon && preview && (
-        <p className="text-6xl pt-6">
-            {initialData.icon}
-        </p>
+        <p className="text-6xl pt-6">{initialData.icon}</p>
       )}
       <div className="opacity-100 group-hover:opacity-100 flex items-center gap-x-1 py-4">
         {!initialData.icon && !preview && (
-            <IconPicker asChild onChange={() => {}}>
-                <Button 
-                variant="outline"
-                size="sm"
-                className="text-muted-foreground text-xs">
-                    <Smile className="h-4 w-4 mr-2"/>
-                    Add Icon
-                </Button>
-            </IconPicker>
+          <IconPicker asChild onChange={() => {}}>
+            <Button
+              className="text-muted-foreground text-xs"
+              variant="outline"
+              size="sm"
+            >
+              <Smile className="w-4 h-4 mr-2" />
+              Add icon
+            </Button>
+          </IconPicker>
         )}
       </div>
     </div>
