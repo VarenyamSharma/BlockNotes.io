@@ -3,19 +3,26 @@
 import { Toolbar } from "@/components/toolbar";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
-import { useQuery } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import React from "react";
 import { useParams } from "next/navigation";
 import { sanitizeId } from '@/lib/utils';
 import { Cover } from "@/components/cover";
 import { Skeleton } from "@/components/ui/skeleton";
-import dynamic from 'next/dynamic'
-const Editor = dynamic(() => import('@/components/editor'), { ssr: false })
+import Editor from "@/components/editor";
+import { update } from "@/convex/forms";
 
 const FormIdPage = () => {
   const params = useParams();
   const safeId = sanitizeId(params.formId);
   const document = useQuery(api.forms.getById, safeId ? { documentId: safeId as Id<"forms"> } : "skip");
+  const update = useMutation(api.forms.update);
+  const onChange = (content: string) => {
+    update({
+      id: safeId as Id<"forms">,
+      content,
+    });
+  };
 
   if (document === undefined) {
     return (
@@ -43,9 +50,9 @@ const FormIdPage = () => {
       <Cover url={document.coverImage} />
       <div className="md:max-w-3xl lg:md-max-w-4xl mx-auto">
         <Toolbar initialData={document} />
-        <Editor 
-        onChange={() => {}}
-        initialContent={document.content}
+        <Editor
+          onChange={onChange}
+          initialContent={document.content}
         />
       </div>
     </div>

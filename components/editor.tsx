@@ -1,46 +1,53 @@
-'use client'	
+"use client";
 
-import {BlockNoteEditor,PartialBlock} from '@blocknote/core'
-import {BlockNoteViewRaw as BlockNoteView,useBlockNote} from '@blocknote/react'
-import '@blocknote/core/style.css'
-import { useTheme } from "next-themes"
+import { PartialBlock } from "@blocknote/core";
+import { BlockNoteViewRaw, useBlockNote } from "@blocknote/react";
+import "@blocknote/core/style.css";
+import { useTheme } from "next-themes";
+import { useEdgeStore } from "@/lib/edgestore";
 
-import { useEdgeStore } from "@/lib/edgestore"
-
-interface EditorProps{
-  onChange:(value:string) => void
-  initialContent?:string
-  editable?:boolean
+interface EditorProps {
+  onChange: (value: string) => void;
+  initialContent?: string;
+  editable?: boolean;
 }
 
-function Editor ({onChange,initialContent,editable}:EditorProps) {
+function Editor({ onChange, initialContent, editable }: EditorProps) {
+  const { resolvedTheme } = useTheme();
+  const { edgestore } = useEdgeStore();
 
-  const {resolvedTheme} = useTheme()
-  const {edgestore} = useEdgeStore()
+  const handleUpload = async (file: File) => {
+    const response = await edgestore.publicFiles.upload({ file });
+    return response.url;
+  };
 
-  const handleUpload = async (file:File) => {
-    const response = await edgestore.publicFiles.upload({file})
-
-    return response.url
+  let parsedContent: PartialBlock[] | undefined;
+  try {
+    parsedContent = initialContent
+      ? (JSON.parse(initialContent) as PartialBlock[])
+      : undefined;
+  } catch (e) {
+    console.error("Invalid initial content JSON:", e);
   }
 
-  const editor:BlockNoteEditor = useBlockNote({
-    initialContent: initialContent ? JSON.parse(initialContent) as PartialBlock[] : undefined,
+  // ❌ don't put `editable` here
+  const editor = useBlockNote({
+    initialContent: parsedContent,
     uploadFile: handleUpload,
-  })
+  });
 
-return (
-    <div>
-      <BlockNoteView
+  return (
+    <div className="border rounded-lg p-2">
+      <BlockNoteViewRaw
         editor={editor}
-        theme={resolvedTheme === 'dark' ? 'dark' : 'light'}
-        editable={editable}
-        onChange={(editor: BlockNoteEditor) => {
-          onChange(JSON.stringify(editor.topLevelBlocks, null, 2))
+        editable={editable}  // ✅ put it here
+        theme={resolvedTheme === "dark" ? "dark" : "light"}
+        onChange={() => {
+          onChange(JSON.stringify(editor.topLevelBlocks, null, 2));
         }}
       />
     </div>
-  )
+  );
 }
 
-export default Editor
+export default Editor;
