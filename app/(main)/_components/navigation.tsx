@@ -1,7 +1,9 @@
 "use client";
 
 import React, { ElementRef, useEffect, useRef, useState } from "react";
+import Link from 'next/link';
 import { useParams, usePathname } from "next/navigation";
+import { useTheme } from 'next-themes';
 import { useMediaQuery } from "usehooks-ts";
 import { useMutation } from "convex/react";
 import { toast } from "sonner";
@@ -31,6 +33,7 @@ import { Navbar } from "./Navbar";
 const Navigation = () => {
   const params = useParams();
   const pathname = usePathname();
+  const { resolvedTheme } = useTheme();
   const search = useSearch();
   const isMobile = useMediaQuery("(max-width: 768px)");
 
@@ -168,6 +171,17 @@ const Navigation = () => {
 
         {/* Sidebar content */}
         <div>
+          {/* Logo — clickable, navigates to home */}
+          <div className="px-3 py-3">
+            <Link href="/" className="flex items-center gap-x-2">
+              <img
+                src={resolvedTheme === 'dark' ? '/logo-dark.svg' : '/logo.svg'}
+                alt="Home"
+                className="h-8 w-auto"
+              />
+            </Link>
+          </div>
+
           <UserItem />
           <Item label="Search" icon={Search} isSearch onClick={search.onOpen} />
           <Item label="Settings" icon={Settings} onClick={() => {}} />

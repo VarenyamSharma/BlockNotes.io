@@ -162,8 +162,10 @@ export const getById = query({
     const identity = await ctx.auth.getUserIdentity();
     const document = await ctx.db.get(args.documentId);
 
+    // If the document doesn't exist, return null so callers can handle
+    // the not-found case without the function throwing an uncaught error.
     if (!document) {
-      throw new Error("not found");
+      return null;
     }
 
     if (document.isPublished && !document.isArchived) {
@@ -219,5 +221,47 @@ export const update = mutation({
     });
 
     return document;
+  },
+});
+
+
+export const removeIcon = mutation({
+  args: {
+    id: v.id("forms"),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      throw new Error("Not authenticated");
+    }
+
+    const userId = identity.subject;
+
+    const existingForm = await ctx.db.get(args.id);
+    if (!existingForm) throw new Error("Form not found");
+    if (existingForm.userId !== userId) throw new Error("Not authorized");
+
+    await ctx.db.patch(args.id, { icon: undefined });
+
+    return existingForm;
+  },
+});
+
+export const removeImage = mutation({
+  args: {
+    id: v.id("forms"),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      throw new Error("Not authenticated");
+    }
+    const userId = identity.subject;
+
+    const existingForm = await ctx.db.get(args.id);
+    if (!existingForm) throw new Error("Form not found");
+    if (existingForm.userId !== userId) throw new Error("Not authorized");
+    await ctx.db.patch(args.id, { coverImage: undefined });
+    return existingForm;
   },
 });

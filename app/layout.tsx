@@ -4,6 +4,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ui/providers/theme-providers";
 import { ConvexClientProvider } from "@/components/ui/providers/convex-provider";
 import { Toaster } from "sonner";
+import { ModalProvider } from "@/components/ui/providers/modal-provider";
+import { EdgeStoreProvider } from "@/lib/edgestore";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,7 +19,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "BlockForms.io",
-  description: "Generate beautiful forms with a Notion-style interface using BlockForms.io.",
+  description:
+    "Generate beautiful forms with a Notion-style interface using BlockForms.io.",
 };
 
 export default function RootLayout({
@@ -31,16 +34,19 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ConvexClientProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-            storageKey="theme"
-          >
-            <Toaster position="bottom-center"/>
-            {children}
-          </ThemeProvider>
+          <EdgeStoreProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+              storageKey="theme"
+            >
+              <Toaster position="bottom-center" />
+              {children}
+              <ModalProvider />
+            </ThemeProvider>
+          </EdgeStoreProvider>
         </ConvexClientProvider>
       </body>
     </html>
