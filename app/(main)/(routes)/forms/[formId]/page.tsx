@@ -1,5 +1,6 @@
 "use client";
 
+import { Toolbar } from "@/components/toolbar";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useQuery } from "convex/react";
@@ -26,7 +27,7 @@ const formIdPage = ({ params }: DocumentIdPageProps) => {
   return (
   <div className="pb-40">
     <div className="md:max-w-3xl">
-
+      <Toolbar initialData={document} />
     </div>
   </div>);
 };
