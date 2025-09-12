@@ -10,7 +10,7 @@ import { sanitizeId } from '@/lib/utils';
 import { Cover } from "@/components/cover";
 import { Skeleton } from "@/components/ui/skeleton";
 import Editor from "@/components/editor";
-// ...existing code...
+import { update } from "@/convex/forms";
 
 const FormIdPage = () => {
   const params = useParams();
@@ -47,9 +47,9 @@ const FormIdPage = () => {
 
   return (
     <div className="pb-40">
-      <Cover preview url={document.coverImage} />
+      <Cover url={document.coverImage} />
       <div className="md:max-w-3xl lg:md-max-w-4xl mx-auto">
-        <Toolbar preview initialData={document} />
+        <Toolbar initialData={document} />
         <Editor
           onChange={onChange}
           initialContent={document.content}

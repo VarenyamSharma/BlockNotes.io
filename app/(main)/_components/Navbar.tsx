@@ -10,6 +10,7 @@ import React from 'react'
 import { Title } from './title';
 import { Spinner } from '@/components/spinner';
 import { Banner } from './Banner';
+import { Publish } from './Publish';
 
 interface NavbarProps {
     isCollapsed: boolean;
@@ -42,6 +43,9 @@ export const Navbar = ({isCollapsed, onResetWidth}: NavbarProps) => {
         )}
         <div className='flex items-center justify-between w-full'>
             <Title  initialData={document}/>
+            <div>
+                <Publish initialData={document}/>
+            </div>
         </div>
     </nav>
     {/* {document.isArchived && (

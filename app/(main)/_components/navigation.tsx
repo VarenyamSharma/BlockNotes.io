@@ -2,7 +2,7 @@
 
 import React, { ElementRef, useEffect, useRef, useState } from "react";
 import Link from 'next/link';
-import { useParams, usePathname } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { useTheme } from 'next-themes';
 import { useMediaQuery } from "usehooks-ts";
 import { useMutation } from "convex/react";
@@ -36,6 +36,7 @@ const Navigation = () => {
   const { resolvedTheme } = useTheme();
   const search = useSearch();
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const router = useRouter();
 
   const isResizingRef = useRef(false);
   const sidebarRef = useRef<ElementRef<"aside">>(null);
@@ -138,7 +139,12 @@ const Navigation = () => {
 
   // Handle new form creation
   const handleCreate = () => {
-    const promise = create({ title: "Untitled" });
+    const promise = create({ title: "Untitled" })
+    .then(( documentId ) => {
+      router.push(`/forms/${documentId}`);
+      
+      
+    });
     toast.promise(promise, {
       loading: "Creating...",
       success: "Form created successfully!",
