@@ -1,11 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="220" height="50" viewBox="0 0 220 50" fill="none">
-  <!-- Icon (Black & White blocks) -->
-  <rect x="5" y="8" width="12" height="12" rx="2" fill="#000000"/>
-  <rect x="21" y="8" width="12" height="12" rx="2" fill="#444444"/>
-  <rect x="5" y="24" width="28" height="12" rx="2" fill="#111111"/>
-  
-  <!-- Text -->
-  <text x="50" y="28" font-family="Segoe UI, Roboto, sans-serif" font-size="22" font-weight="600" fill="#000000">
-    BlockForms.io
-  </text>
+<!--?xml version="1.0" encoding="utf-8"?-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 80" width="420" height="80" role="img" aria-label="BlockNotes.io logo (light mode)">
+  <title>BlockNotes.io (light mode)</title>
+
+  <rect width="420" height="80" fill="transparent"></rect>
+
+  <g transform="translate(8,8)">
+    <rect x="0" y="0" width="28" height="28" rx="2" fill="#111111"></rect>
+    <rect x="36" y="0" width="28" height="28" rx="2" fill="#bdbdbd"></rect>
+    <rect x="0" y="36" width="64" height="28" rx="2" fill="#111111"></rect>
+  </g>
+
+  <text x="96" y="58" fill="#111111" font-family="&quot;Press Start 2P&quot;, &quot;Courier New&quot;, monospace" font-size="36">BlockNotes.io</text>
 </svg>

@@ -56,9 +56,7 @@ const FormIdPage = () => {
           onChange={onChange}
           initialContent={document.content}
         />
-        <Button onClick={() => {}}>
-          Submit
-        </Button>
+
       </div>
     </div>
   );

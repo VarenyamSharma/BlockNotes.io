@@ -18,6 +18,7 @@ import {
   Plus,
   Trash,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { toast } from "sonner";
 
@@ -56,6 +57,7 @@ export const Item = ({
 
   const Chevronicon = expanded ? ChevronDown : ChevronRight;
   const archive = useMutation(api.forms.archive);
+  const router = useRouter();
 
   const onArchive = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.stopPropagation();
@@ -66,6 +68,8 @@ export const Item = ({
       success: "Form moved to trash",
       error: "Error archiving form",
     });
+
+    router.push("/forms");
   };
 
   return (
