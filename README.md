@@ -1,122 +1,234 @@
-BlockNotes.io: A Real-time, Notion-Style Notes Application
-<div align="center">
+# BlockNotes.io - Modern Form Builder & Note-Taking Platform
 
-A modern, open-source, and collaborative note-taking application built with Next.js, Convex, and Clerk.
+[![Next.js](https://img.shields.io/badge/Next.js-15.4.6-black?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19.1.0-blue?style=flat-square&logo=react)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+[![Convex](https://img.shields.io/badge/Convex-1.27.0-purple?style=flat-square)](https://convex.dev/)
+[![Clerk](https://img.shields.io/badge/Clerk-Auth-green?style=flat-square)](https://clerk.com/)
 
-Live Demo · Report Bug · Request Feature
+A modern, full-stack form builder and note-taking application built with Next.js 15, featuring real-time collaboration, rich text editing, and seamless user authentication. BlockNotes.io combines the power of Notion-style editing with form creation capabilities, providing a unified workspace for productivity.
 
-</div>
+## ✨ Features
 
-📖 Overview
-BlockNotes.io is a feature-rich, Notion-inspired notes application designed for real-time collaboration and seamless document management. It provides a beautiful and intuitive block-based editor, allowing users to create, publish, and share their notes with ease.
+### 🎨 **Rich Text Editor**
+- **BlockNote Integration**: Advanced block-based editor with drag-and-drop functionality
+- **Real-time Collaboration**: Live editing with instant updates across users
+- **Rich Formatting**: Support for headings, lists, code blocks, and more
+- **Emoji Picker**: Enhanced user experience with emoji support
 
-With built-in AI capabilities, secure authentication, and a robust backend, BlockNotes.io is the perfect platform for individuals and teams looking to streamline their workflow.
+### 📝 **Form Management**
+- **Create & Edit Forms**: Intuitive form builder with drag-and-drop interface
+- **Publish & Share**: Public form sharing with customizable URLs
+- **Form Templates**: Pre-built templates for quick form creation
+- **Response Management**: Track and analyze form responses
 
-✨ Key Features
-✍️ Notion-Style Rich Text Editor: A sophisticated, block-based editor powered by BlockNote for an intuitive and flexible writing experience.
+### 🔐 **Authentication & Security**
+- **Clerk Integration**: Secure user authentication and management
+- **Role-based Access**: User-specific form access and permissions
+- **Data Privacy**: Secure data handling and storage
 
-⚡ Real-time Collaboration: Powered by Convex, all changes sync instantly across clients.
+### 🎯 **User Experience**
+- **Dark/Light Mode**: Seamless theme switching with system preference detection
+- **Responsive Design**: Mobile-first approach with cross-device compatibility
+- **Search Functionality**: Global search across all forms and notes
+- **File Management**: Upload and manage cover images and attachments
 
-🚀 Publish to the Web: Share notes via unique URLs with one click.
+### 🗂️ **Organization**
+- **Hierarchical Structure**: Nested forms and documents
+- **Archive System**: Soft delete with restore functionality
+- **Trash Management**: Permanent deletion with confirmation
+- **Smart Navigation**: Breadcrumb navigation and sidebar organization
 
-🧠 AI-Powered Summarization: Generate concise summaries using the Google Gemini API.
+## 🚀 Tech Stack
 
-🔐 Secure Authentication: Simple and safe login/signup with Clerk.
+### **Frontend**
+- **Next.js 15** - React framework with App Router
+- **React 19** - Latest React with concurrent features
+- **TypeScript** - Type-safe development
+- **Tailwind CSS** - Utility-first CSS framework
+- **Radix UI** - Accessible component primitives
+- **Lucide React** - Beautiful icon library
 
-🖼️ Image & Cover Uploads: Easily upload images and covers with EdgeStore.
+### **Backend & Database**
+- **Convex** - Real-time backend with automatic reactivity
+- **EdgeStore** - File storage and management
+- **Zod** - Runtime type validation
 
-🗂️ Nested Document Management: Organize notes hierarchically for better structure.
+### **Authentication & Storage**
+- **Clerk** - User authentication and management
+- **Convex Auth** - Secure backend authentication
 
-🗑️ Soft Deletion & Recovery: A trash bin with options to restore or permanently delete notes.
+### **Editor & UI**
+- **BlockNote** - Rich text editor with block-based editing
+- **React Dropzone** - File upload handling
+- **Sonner** - Toast notifications
+- **Zustand** - State management
 
-🎨 Light & Dark Mode: A modern UI with customizable themes.
+## 📦 Installation
 
-📄 PDF Export: Export notes into clean PDFs directly from the preview mode.
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn
+- Convex account
+- Clerk account
 
-📱 Fully Responsive: Works seamlessly on desktop, tablet, and mobile devices.
+### Setup Instructions
 
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/blocknotes.git
+   cd blocknotes
+   ```
 
-## 🛠️ Tech Stack
+2. **Install dependencies**
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
 
-| Category           | Technology         |
-|--------------------|--------------------|
-| Framework          | Next.js (App Router) |
-| Database & Backend | Convex             |
-| Authentication     | Clerk              |
-| File Storage       | EdgeStore          |
-| UI Components      | shadcn/ui          |
-| Styling            | Tailwind CSS       |
-| Editor             | BlockNote          |
-| Deployment         | Vercel             |
+3. **Environment Configuration**
+   Create a `.env.local` file in the root directory:
+   ```env
+   # Clerk Authentication
+   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+   CLERK_SECRET_KEY=your_clerk_secret_key
+   
+   # Convex Backend
+   CONVEX_DEPLOYMENT=your_convex_deployment_url
+   NEXT_PUBLIC_CONVEX_URL=your_convex_url
+   
+   # EdgeStore (Optional)
+   EDGE_STORE_ACCESS_KEY=your_edgestore_access_key
+   EDGE_STORE_SECRET_KEY=your_edgestore_secret_key
+   ```
 
+4. **Initialize Convex**
+   ```bash
+   npx convex dev
+   ```
 
-🚀 Getting Started
-Prerequisites
-Node.js v18+
+5. **Run the development server**
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
 
-npm, yarn, or pnpm
+6. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
 
-Installation
-Clone the repository:
+## 🏗️ Project Structure
 
-git clone [https://github.com/your-username/blocknotes.io.git](https://github.com/your-username/blocknotes.io.git)
-cd blocknotes.io
+```
+blocknotes/
+├── app/                          # Next.js App Router
+│   ├── (landing page)/          # Landing page components
+│   ├── (main)/                  # Main application routes
+│   │   └── (routes)/
+│   │       └── forms/           # Form management pages
+│   ├── (public)/                # Public form previews
+│   └── api/                     # API routes
+├── components/                   # Reusable UI components
+│   ├── ui/                      # Base UI components
+│   ├── modals/                  # Modal components
+│   └── upload/                  # File upload components
+├── convex/                      # Convex backend functions
+│   ├── forms.ts                 # Form CRUD operations
+│   ├── auth.convex.ts          # Authentication logic
+│   └── schema.ts                # Database schema
+├── hooks/                       # Custom React hooks
+├── lib/                         # Utility functions
+└── public/                      # Static assets
+```
 
-Install dependencies:
+## 🔧 Available Scripts
 
-npm install
+- `npm run dev` - Start development server with Turbopack
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
 
-Set up environment variables:
-Create a .env.local file in the root of the project and add the following variables. You can obtain these keys from their respective service dashboards.
+## 📚 API Reference
 
-# Convex
-NEXT_PUBLIC_CONVEX_URL=
+### Form Operations
 
-# Clerk
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
-CLERK_SECRET_KEY=
+#### Create Form
+```typescript
+const createForm = useMutation(api.forms.create);
+await createForm({ title: "My Form" });
+```
 
-# Google Gemini API for AI features
-GEMINI_API_KEY=
+#### Get Forms
+```typescript
+const forms = useQuery(api.forms.getSidebar, { parentDocument: undefined });
+```
 
-Run the development server:
+#### Update Form
+```typescript
+const updateForm = useMutation(api.forms.update);
+await updateForm({ 
+  id: formId, 
+  title: "Updated Title",
+  isPublished: true 
+});
+```
 
-npm run dev
+#### Archive Form
+```typescript
+const archiveForm = useMutation(api.forms.archive);
+await archiveForm({ documentId: formId });
+```
 
-The application will be running at http://localhost:3000.
+## 🎨 Customization
 
-📂 Project Structure
-/
-├── app/                  # Main application routes and layouts
-│   ├── (main)/           # Authenticated routes
-│   ├── (landing page)/   # Public landing page
-│   └── (public)/         # Publicly accessible routes (e.g., previews)
-├── components/           # Reusable UI components
-├── convex/               # Convex database schema and server functions
-├── hooks/                # Custom React hooks
-├── lib/                  # Utility functions and library initializations
-└── public/               # Static assets
+### Theming
+The application supports both light and dark themes. Customize the theme in `components/ui/providers/theme-providers.tsx`.
 
-🤝 Contributing
-Contributions are welcome!
+### Styling
+Modify the design system by updating Tailwind configuration in `tailwind.config.js` and component styles.
 
-Fork the repository.
+### Database Schema
+Extend the database schema in `convex/schema.ts` to add new fields or tables.
 
-Create a new branch:
+## 🚀 Deployment
 
-git checkout -b feature/your-feature-name
+### Vercel (Recommended)
+1. Push your code to GitHub
+2. Connect your repository to Vercel
+3. Add environment variables in Vercel dashboard
+4. Deploy automatically
 
-Make your changes and commit them:
+### Other Platforms
+The application can be deployed to any platform that supports Next.js:
+- Netlify
+- Railway
+- DigitalOcean App Platform
 
-git commit -m "Add some feature"
+## 🤝 Contributing
 
-Push to your branch:
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-git push origin feature/your-feature-name
+## 📄 License
 
-Open a Pull Request.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-👉 Please open an issue to discuss any significant changes before starting work.
+## 🙏 Acknowledgments
 
-📄 License
-This project is licensed under the MIT License. See the LICENSE file for more details.
+- [Next.js](https://nextjs.org/) - The React framework
+- [Convex](https://convex.dev/) - Real-time backend
+- [Clerk](https://clerk.com/) - Authentication
+- [BlockNote](https://www.blocknotejs.org/) - Rich text editor
+- [Radix UI](https://www.radix-ui.com/) - UI components
+
+## 📞 Support
+
+For support, email support@blocknotes.io or join our Discord community.
+
+---
+
+**Built with ❤️ by the BlockNotes.io Team**
