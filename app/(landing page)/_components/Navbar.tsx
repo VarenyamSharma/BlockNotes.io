@@ -44,7 +44,7 @@ const Navbar = () => {
         {isAuthenticated && !isLoading && (
           <>
             <Button variant="ghost" size="sm" asChild>
-              <Link href="/forms">Create Forms</Link>
+              <Link href="/forms">Create Notes</Link>
             </Button>
             <UserButton afterSignOutUrl="/" />
           </>
