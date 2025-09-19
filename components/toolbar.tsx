@@ -1,7 +1,7 @@
 "use client";
 
 import React, { ElementRef, useRef, useState } from "react";
-import { ImageIcon, Smile, X, FileText, Download } from "lucide-react";
+import { ImageIcon, Smile, X, FileText } from "lucide-react";
 import { useMutation, useAction } from "convex/react";
 import TextAreaAutoSize from "react-textarea-autosize";
 import { toast } from "sonner";
@@ -23,10 +23,9 @@ import { Spinner } from "./spinner";
 interface ToolbarProps {
   initialData: Doc<"forms">;
   preview?: boolean;
-  onExport?: () => void;
 }
 
-export function Toolbar({ initialData, preview, onExport }: ToolbarProps) {
+export function Toolbar({ initialData, preview }: ToolbarProps) {
   const inputRef = useRef<ElementRef<"textarea">>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState(initialData.title);
@@ -178,15 +177,6 @@ export function Toolbar({ initialData, preview, onExport }: ToolbarProps) {
               )}
             </DialogContent>
           </Dialog>
-          <Button
-            onClick={onExport}
-            className="text-muted-foreground text-xs"
-            variant="outline"
-            size="sm"
-          >
-            <Download className="w-4 h-4 mr-2" />
-            Export to PDF
-          </Button>
         </div>
       )}
 
@@ -210,4 +200,3 @@ export function Toolbar({ initialData, preview, onExport }: ToolbarProps) {
     </div>
   );
 }
-
