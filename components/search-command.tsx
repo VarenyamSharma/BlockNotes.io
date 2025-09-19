@@ -51,10 +51,10 @@ export const SearchCommand = () => {
 
   return (
   <CommandDialog open={isOpen} onOpenChange={onClose}>
-      <CommandInput placeholder="Search forms..." />
+      <CommandInput placeholder="Search Notes..." />
       <CommandList>
         <CommandEmpty>No result Found</CommandEmpty>
-        <CommandGroup heading="Forms">
+        <CommandGroup heading="Notes">
           {documents?.map((doc) => (
             <CommandItem
               key={doc._id}

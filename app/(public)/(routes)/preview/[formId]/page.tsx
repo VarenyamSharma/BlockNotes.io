@@ -3,27 +3,18 @@
 import { Toolbar } from "@/components/toolbar";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
-import { useMutation, useQuery } from "convex/react";
+import { useQuery } from "convex/react";
 import React from "react";
 import { useParams } from "next/navigation";
 import { sanitizeId } from '@/lib/utils';
 import { Cover } from "@/components/cover";
 import { Skeleton } from "@/components/ui/skeleton";
 import Editor from "@/components/editor";
-import { update } from "@/convex/forms";
-import { Button } from "@/components/ui/button";
 
 const FormIdPage = () => {
   const params = useParams();
   const safeId = sanitizeId(params.formId);
   const document = useQuery(api.forms.getById, safeId ? { documentId: safeId as Id<"forms"> } : "skip");
-  const update = useMutation(api.forms.update);
-  const onChange = (content: string) => {
-    update({
-      id: safeId as Id<"forms">,
-      content,
-    });
-  };
 
   if (document === undefined) {
     return (
@@ -53,10 +44,9 @@ const FormIdPage = () => {
         <Toolbar preview initialData={document} />
         <Editor
           editable={false}
-          onChange={onChange}
+          onChange={() => {}} // No-op on change in preview
           initialContent={document.content}
         />
-
       </div>
     </div>
   );

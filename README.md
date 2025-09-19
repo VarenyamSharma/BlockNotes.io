@@ -1,109 +1,96 @@
-BlockForms.io
-Generate beautiful, Notion-style forms with ease. BlockForms.io provides a powerful and intuitive interface to create, manage, and share forms, streamlining your data collection and workflow.
+BlockNotes.io: The Open-Source, Notion-Style Notes App
+BlockNotes.io is a lightweight, yet powerful open-source application that empowers teams and individuals to design, preview, and publish Notion-style notes with unparalleled ease. Optimized for rapid iteration and seamless deployment, it offers a robust platform for integrating with production systems.
 
 Key Features
-Notion-Style Editor: A rich text editor that allows you to build forms with the same flexibility and ease as Notion.
+✍️ Notion-Style Rich Text Editor: A sophisticated, block-based editor that provides the flexibility and intuitive interface of Notion for crafting beautiful and structured notes.
 
-Real-time Database: Powered by Convex, ensuring your data is always up-to-date.
+🧠 AI-Powered Assistance: Enhance your productivity with intelligent features:
 
-Authentication: Secure user authentication handled by Clerk.
+Content Summarization: Automatically generate concise summaries of lengthy notes.
 
-File Uploads: Seamlessly upload images and other files with EdgeStore.
+Title Auto-generation: Let AI suggest compelling titles for your documents.
 
-Customization: Light and dark mode support to match your preferences.
+Smart Tagging: Receive intelligent tag suggestions to organize your notes effortlessly.
 
-Publish and Share: Easily publish your forms and share them via a unique link.
+Machine Translation: Translate your content into multiple languages with a single click.
 
-Form Management: Archive, restore, and permanently delete forms with a dedicated trash system.
+🕸️ Knowledge Graph View: Visualize the intricate relationships between your notes, offering a connected, Obsidian-like perspective of your knowledge base.
+
+⚡ Real-time Database & Serverless Functions: Powered by Convex, ensuring your data is always synchronized in real-time across all clients without managing a backend.
+
+🔐 Secure Authentication: Robust and secure user authentication handled by Clerk, providing a seamless and safe login experience.
+
+☁️ Effortless File Uploads: Integrated with EdgeStore for smooth and reliable image and file uploads.
+
+🎨 Customizable Themes: A sleek and modern UI with support for both light and dark modes to suit your personal preferences.
+
+🚀 Publish & Share: Easily publish your notes to the web and share them with a unique link for collaboration or public viewing.
+
+🗂️ Advanced Note Management: A comprehensive system for managing your notes, including archiving, restoring, and a dedicated trash system for soft deletion.
 
 Tech Stack
-Framework: Next.js
+Framework: Next.js (App Router)
 
-Database: Convex
-# BlockForms (Notion-style form builder)
+Database: Convex (Real-time Database and Serverless Functions)
 
-BlockForms is a lightweight Next.js application that lets teams design, preview, and publish Notion-style forms. It's optimized for fast iteration and simple deployments while providing hooks to integrate with production systems (Convex, Google Sheets, etc.).
+Authentication: Clerk
 
-Key capabilities
+File Uploads: EdgeStore
 
-- Notion-style rich editor for building forms
-- Interactive Preview mode with a working form (test submissions)
-- Persist and export responses (CSV / XLSX)
-- File uploads via EdgeStore
-- Authentication integration via Clerk (optional)
-- Optional integrations: Google Sheets export and AI summarizer
+Styling: Tailwind CSS + shadcn/ui
 
-Tech stack
+Editor: BlockNote
 
-- Next.js (app router)
-- Convex (real-time DB and serverless functions)
-- Clerk (authentication)
-- EdgeStore (file uploads)
-- Tailwind CSS + shadcn/ui (styling)
-- BlockNote (rich editor)
-
-Getting started (developer)
-
+Getting Started (Developer)
 Prerequisites
+Node.js v18+
 
-- Node.js v18+
-- npm or yarn
+npm or yarn
 
-Install and run
+Installation and Setup
+Clone the repository:
 
-```powershell
+Bash
+
+git clone https://github.com/your-username/blocknotes.io.git
+cd blocknotes.io
+Install dependencies:
+
+Bash
+
 npm install
+Set up environment variables:
+Create a .env.local file in the repository root and provide the necessary API keys and configuration:
+
+Code snippet
+
+NEXT_PUBLIC_CONVEX_URL=
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+CLERK_JWT_ISSUER_DOMAIN=
+# Optional for AI features
+LLM_API_KEY=
+Run the development server:
+
+Bash
+
 npm run dev
+Open http://localhost:3000 in your browser to see the application in action.
 
-# open http://localhost:3000
-```
+Core Files and Conventions
+components/: UI components (editor, navigation, etc.)
 
-Environment variables
+app/(main)/(routes)/documents/[documentId]/page.tsx: The main document editor page.
 
-Create a `.env.local` file in the repository root and provide the values used by your environment. Example variables used in this project:
+convex/: Convex functions and database schema.
 
-- NEXT_PUBLIC_CONVEX_URL=
-- NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
-- CLERK_SECRET_KEY=
-- CLERK_JWT_ISSUER_DOMAIN=
-- (Optional) GCP_SERVICE_ACCOUNT_KEY, GSPREAD_SHEET_ID — for Google Sheets integration
-- (Optional) LLM_API_KEY — for the summarizer
+Production Notes
+Secure all server routes with proper authentication and authorization before exposing any sensitive data.
 
-Core files and conventions
-
-- `components/` — UI components (form builder, preview, editor)
-- `app/(main)/(routes)/forms/[formId]/page.tsx` — form editor page
-- `app/api/responses/route.ts` — server route (demo store + export)
-- `convex/` — Convex functions and schema (if used)
-- `data/responses.json` — simple local response store used in demos
-
-Production notes
-
-- The demo includes a file-backed store (for simplicity). Replace the route implementation with your production DB client (Convex, Postgres, etc.) and keep the same request contract (POST `{ formId, data }`).
-- Secure server routes (authentication + authorization) before exposing data.
-- Use a Google service account with limited permissions for Sheets integration.
-- Add rate limiting and queuing if you expect high write throughput.
-
-Optional integrations
-
-1) Google Sheets (opt-in)
-
-- Use a Google service account and the Sheets API to append rows for each response.
-- Recommended env vars: `GCP_SERVICE_ACCOUNT_KEY` (JSON), `GSPREAD_SHEET_ID`, `GSPREAD_RANGE`.
-
-2) Form Summarizer (opt-in)
-
-- Implement a server route that reads recent responses and returns a summary object.
-- Two options: a lightweight aggregator (counts/top answers) or an LLM-based summarizer (requires API key and prompt design).
+Add rate limiting and queuing if you expect high write throughput to prevent abuse and ensure stability.
 
 Contributing
-
-Contributions, issues and feature requests are welcome. Please open an issue describing the change before sending large pull requests.
+Contributions, issues, and feature requests are welcome. Please open an issue to discuss the change before submitting a pull request.
 
 License
-
-This project is released under the MIT License. See `LICENSE` for details.
-
-Contact
-
-If you want assistance implementing the optional integrations (Google Sheets or summarizer), tell me which one to implement first and I will add the concrete server routes, wiring and example tests.
+This project is licensed under the MIT License. See the LICENSE file for more details.
