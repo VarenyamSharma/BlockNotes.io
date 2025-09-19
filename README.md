@@ -52,7 +52,6 @@ Prerequisites
 Install and run
 
 ```powershell
-cd "d:\MCA\personal projects\notionform"
 npm install
 npm run dev
 
