@@ -23,7 +23,7 @@ import { Spinner } from "./spinner";
 interface ToolbarProps {
   initialData: Doc<"forms">;
   preview?: boolean;
-  onExport?: () => void; // Prop to handle the export action
+  onExport?: () => void;
 }
 
 export function Toolbar({ initialData, preview, onExport }: ToolbarProps) {
@@ -151,7 +151,7 @@ export function Toolbar({ initialData, preview, onExport }: ToolbarProps) {
       </div>
 
       {preview && (
-        <div className="flex items-center gap-x-2 py-4">
+        <div id="preview-action-buttons" className="flex items-center gap-x-2 py-4">
           <Dialog>
             <DialogTrigger asChild>
               <Button

@@ -1,96 +1,122 @@
-BlockNotes.io: The Open-Source, Notion-Style Notes App
-BlockNotes.io is a lightweight, yet powerful open-source application that empowers teams and individuals to design, preview, and publish Notion-style notes with unparalleled ease. Optimized for rapid iteration and seamless deployment, it offers a robust platform for integrating with production systems.
+BlockNotes.io: A Real-time, Notion-Style Notes Application
+<div align="center">
 
-Key Features
-✍️ Notion-Style Rich Text Editor: A sophisticated, block-based editor that provides the flexibility and intuitive interface of Notion for crafting beautiful and structured notes.
+A modern, open-source, and collaborative note-taking application built with Next.js, Convex, and Clerk.
 
-🧠 AI-Powered Assistance: Enhance your productivity with intelligent features:
+Live Demo · Report Bug · Request Feature
 
-Content Summarization: Automatically generate concise summaries of lengthy notes.
+</div>
 
-Title Auto-generation: Let AI suggest compelling titles for your documents.
+📖 Overview
+BlockNotes.io is a feature-rich, Notion-inspired notes application designed for real-time collaboration and seamless document management. It provides a beautiful and intuitive block-based editor, allowing users to create, publish, and share their notes with ease.
 
-Smart Tagging: Receive intelligent tag suggestions to organize your notes effortlessly.
+With built-in AI capabilities, secure authentication, and a robust backend, BlockNotes.io is the perfect platform for individuals and teams looking to streamline their workflow.
 
-Machine Translation: Translate your content into multiple languages with a single click.
+✨ Key Features
+✍️ Notion-Style Rich Text Editor: A sophisticated, block-based editor powered by BlockNote for an intuitive and flexible writing experience.
 
-🕸️ Knowledge Graph View: Visualize the intricate relationships between your notes, offering a connected, Obsidian-like perspective of your knowledge base.
+⚡ Real-time Collaboration: Powered by Convex, all changes sync instantly across clients.
 
-⚡ Real-time Database & Serverless Functions: Powered by Convex, ensuring your data is always synchronized in real-time across all clients without managing a backend.
+🚀 Publish to the Web: Share notes via unique URLs with one click.
 
-🔐 Secure Authentication: Robust and secure user authentication handled by Clerk, providing a seamless and safe login experience.
+🧠 AI-Powered Summarization: Generate concise summaries using the Google Gemini API.
 
-☁️ Effortless File Uploads: Integrated with EdgeStore for smooth and reliable image and file uploads.
+🔐 Secure Authentication: Simple and safe login/signup with Clerk.
 
-🎨 Customizable Themes: A sleek and modern UI with support for both light and dark modes to suit your personal preferences.
+🖼️ Image & Cover Uploads: Easily upload images and covers with EdgeStore.
 
-🚀 Publish & Share: Easily publish your notes to the web and share them with a unique link for collaboration or public viewing.
+🗂️ Nested Document Management: Organize notes hierarchically for better structure.
 
-🗂️ Advanced Note Management: A comprehensive system for managing your notes, including archiving, restoring, and a dedicated trash system for soft deletion.
+🗑️ Soft Deletion & Recovery: A trash bin with options to restore or permanently delete notes.
 
-Tech Stack
-Framework: Next.js (App Router)
+🎨 Light & Dark Mode: A modern UI with customizable themes.
 
-Database: Convex (Real-time Database and Serverless Functions)
+📄 PDF Export: Export notes into clean PDFs directly from the preview mode.
 
-Authentication: Clerk
+📱 Fully Responsive: Works seamlessly on desktop, tablet, and mobile devices.
 
-File Uploads: EdgeStore
 
-Styling: Tailwind CSS + shadcn/ui
+## 🛠️ Tech Stack
 
-Editor: BlockNote
+| Category           | Technology         |
+|--------------------|--------------------|
+| Framework          | Next.js (App Router) |
+| Database & Backend | Convex             |
+| Authentication     | Clerk              |
+| File Storage       | EdgeStore          |
+| UI Components      | shadcn/ui          |
+| Styling            | Tailwind CSS       |
+| Editor             | BlockNote          |
+| Deployment         | Vercel             |
 
-Getting Started (Developer)
+
+🚀 Getting Started
 Prerequisites
 Node.js v18+
 
-npm or yarn
+npm, yarn, or pnpm
 
-Installation and Setup
+Installation
 Clone the repository:
 
-Bash
-
-git clone https://github.com/your-username/blocknotes.io.git
+git clone [https://github.com/your-username/blocknotes.io.git](https://github.com/your-username/blocknotes.io.git)
 cd blocknotes.io
+
 Install dependencies:
 
-Bash
-
 npm install
+
 Set up environment variables:
-Create a .env.local file in the repository root and provide the necessary API keys and configuration:
+Create a .env.local file in the root of the project and add the following variables. You can obtain these keys from their respective service dashboards.
 
-Code snippet
-
+# Convex
 NEXT_PUBLIC_CONVEX_URL=
+
+# Clerk
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
 CLERK_SECRET_KEY=
-CLERK_JWT_ISSUER_DOMAIN=
-# Optional for AI features
-LLM_API_KEY=
+
+# Google Gemini API for AI features
+GEMINI_API_KEY=
+
 Run the development server:
 
-Bash
-
 npm run dev
-Open http://localhost:3000 in your browser to see the application in action.
 
-Core Files and Conventions
-components/: UI components (editor, navigation, etc.)
+The application will be running at http://localhost:3000.
 
-app/(main)/(routes)/documents/[documentId]/page.tsx: The main document editor page.
+📂 Project Structure
+/
+├── app/                  # Main application routes and layouts
+│   ├── (main)/           # Authenticated routes
+│   ├── (landing page)/   # Public landing page
+│   └── (public)/         # Publicly accessible routes (e.g., previews)
+├── components/           # Reusable UI components
+├── convex/               # Convex database schema and server functions
+├── hooks/                # Custom React hooks
+├── lib/                  # Utility functions and library initializations
+└── public/               # Static assets
 
-convex/: Convex functions and database schema.
+🤝 Contributing
+Contributions are welcome!
 
-Production Notes
-Secure all server routes with proper authentication and authorization before exposing any sensitive data.
+Fork the repository.
 
-Add rate limiting and queuing if you expect high write throughput to prevent abuse and ensure stability.
+Create a new branch:
 
-Contributing
-Contributions, issues, and feature requests are welcome. Please open an issue to discuss the change before submitting a pull request.
+git checkout -b feature/your-feature-name
 
-License
+Make your changes and commit them:
+
+git commit -m "Add some feature"
+
+Push to your branch:
+
+git push origin feature/your-feature-name
+
+Open a Pull Request.
+
+👉 Please open an issue to discuss any significant changes before starting work.
+
+📄 License
 This project is licensed under the MIT License. See the LICENSE file for more details.

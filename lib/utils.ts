@@ -18,42 +18,90 @@ export function sanitizeId(value?: string | string[] | null) {
 }
 
 /**
- * Exports a given HTML element to a PDF file.
+ * Exports a given HTML element to a PDF file, applying temporary styles
+ * to ensure compatibility with modern CSS color functions like oklch().
  * @param element The HTML element to capture.
  * @param fileName The desired name for the downloaded PDF file.
  */
 export const exportToPdf = async (element: HTMLElement, fileName: string) => {
+  const style = document.createElement('style');
+  style.id = 'temp-pdf-styles';
+
+  // HSL fallbacks for oklch colors used in globals.css.
+  // This ensures html2canvas can render the colors correctly without
+  // affecting the live application's styling.
+  const cssOverrides = `
+    :root {
+      --background: hsl(0 0% 100%);
+      --foreground: hsl(0 0% 14.5%);
+      --card: hsl(0 0% 100%);
+      --card-foreground: hsl(0 0% 14.5%);
+      --popover: hsl(0 0% 100%);
+      --popover-foreground: hsl(0 0% 14.5%);
+      --primary: hsl(0 0% 20.5%);
+      --primary-foreground: hsl(0 0% 98.5%);
+      --secondary: hsl(0 0% 97%);
+      --secondary-foreground: hsl(0 0% 20.5%);
+      --muted: hsl(0 0% 97%);
+      --muted-foreground: hsl(0 0% 55.6%);
+      --accent: hsl(0 0% 97%);
+      --accent-foreground: hsl(0 0% 20.5%);
+      --destructive: hsl(8.6 87.5% 53.9%);
+      --border: hsl(0 0% 92.2%);
+      --input: hsl(0 0% 92.2%);
+      --ring: hsl(0 0% 70.8%);
+    }
+
+    .dark {
+      --background: hsl(0 0% 14.5%);
+      --foreground: hsl(0 0% 98.5%);
+      --card: hsl(0 0% 20.5%);
+      --card-foreground: hsl(0 0% 98.5%);
+      --popover: hsl(0 0% 20.5%);
+      --popover-foreground: hsl(0 0% 98.5%);
+      --primary: hsl(0 0% 92.2%);
+      --primary-foreground: hsl(0 0% 20.5%);
+      --secondary: hsl(0 0% 26.9%);
+      --secondary-foreground: hsl(0 0% 98.5%);
+      --muted: hsl(0 0% 26.9%);
+      --muted-foreground: hsl(0 0% 70.8%);
+      --accent: hsl(0 0% 26.9%);
+      --accent-foreground: hsl(0 0% 98.5%);
+      --destructive: hsl(4.6 78.9% 65.5%);
+      --border: hsl(0 0% 100% / 0.1);
+      --input: hsl(0 0% 100% / 0.15);
+      --ring: hsl(0 0% 55.6%);
+    }
+  `;
+  
+  style.innerHTML = cssOverrides;
+  document.head.appendChild(style);
+
   try {
-    // Use html2canvas to render the element into a canvas.
-    // Increasing the scale improves the resolution of the output PDF.
     const canvas = await html2canvas(element, {
       useCORS: true,
       scale: 2,
+      backgroundColor: null, // Use the element's background
     });
 
-    // Get the image data from the canvas in PNG format.
     const imgData = canvas.toDataURL('image/png');
-
-    // Create a new jsPDF instance. The 'p' stands for portrait,
-    // 'mm' for millimeters, and 'a4' for the paper size.
     const pdf = new jsPDF({
       orientation: 'p',
       unit: 'mm',
       format: 'a4',
     });
 
-    // Calculate the dimensions of the PDF page.
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
-    // Add the captured image to the PDF document.
     pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-
-    // Trigger the download of the PDF file.
     pdf.save(`${fileName.replace(/ /g, '_')}.pdf`);
-  } catch (error) {
-    console.error("Error exporting to PDF:", error);
-    throw new Error("Failed to export note to PDF. Please try again.");
+  } finally {
+    // Ensure temporary styles are always removed after the capture
+    const tempStyle = document.getElementById('temp-pdf-styles');
+    if (tempStyle) {
+      document.head.removeChild(tempStyle);
+    }
   }
 };
 

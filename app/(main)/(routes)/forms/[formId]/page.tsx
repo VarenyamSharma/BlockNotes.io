@@ -10,7 +10,6 @@ import { sanitizeId } from '@/lib/utils';
 import { Cover } from "@/components/cover";
 import { Skeleton } from "@/components/ui/skeleton";
 import Editor from "@/components/editor";
-// ...existing code...
 
 const FormIdPage = () => {
   const params = useParams();
