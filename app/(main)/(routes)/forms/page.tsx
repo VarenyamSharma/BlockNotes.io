@@ -9,7 +9,7 @@ import React from 'react'
 import { api } from '@/convex/_generated/api';
 import { toast } from 'sonner';
 
-const form = () => {
+const FormPage = () => {
 
   const {user} = useUser();
 
@@ -41,7 +41,7 @@ const form = () => {
       alt="Empty State"
       className='dark:block hidden'
       />
-      <h2 className='text-lg font-medium'>Welcome to {user?.firstName}'s Form</h2>
+      <h2 className='text-lg font-medium'>Welcome to {user?.firstName}&apos;s Form</h2>
       <Button onClick={onCreate}>
         <PlusCircle className='h-4 w-4 mr-1'/>
         Create a form
@@ -50,4 +50,4 @@ const form = () => {
   )
 }
 
-export default form
+export default FormPage;

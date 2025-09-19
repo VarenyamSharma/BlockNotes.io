@@ -8,7 +8,7 @@ import { Id } from "@/convex/_generated/dataModel";
 import { useMutation, useQuery } from "convex/react";
 import { Search, Trash, Undo } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 import { toast } from "sonner";
 
 export const Trashbox = () => {
@@ -29,7 +29,7 @@ export const Trashbox = () => {
   };
 
   const onRestore = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    event: MouseEvent<HTMLDivElement>,
     documentId: Id<"forms">
   ) => {
     event.stopPropagation();
@@ -91,7 +91,7 @@ export const Trashbox = () => {
             <span className="truncate pl-2">{document.title}</span>
             <div className="flex items-center">
               <div
-                onClick={(e) => { e.stopPropagation(); onRestore(e as any, document._id); }}
+                onClick={(e) => onRestore(e, document._id)}
                 role="button"
                 className="rounded-sm p-2 hover:bg-primary/20"
               >
