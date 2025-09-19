@@ -13,12 +13,12 @@ const Heading = () => {
   return (
     <div className="max-w-3xl space-y-4">
       <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold">
-        Simplify forms. Unify your workflow. Welcome to{" "}
-        <span className="underline">BlockForms.io</span>
+        Simplify Notes. Unify your workflow. Welcome to{" "}
+        <span className="underline">BlockNotes.io</span>
       </h1>
       <h3 className="text-base sm:text-xl md:text-2xl font-medium">
-        Streamline your data collection and management with
-        <br /> our powerful form solutions.
+        Experience the future of note-taking with seamless collaboration,
+        <br /> our powerful notes solutions.
       </h3>
 
       {isLoading && (
@@ -30,7 +30,7 @@ const Heading = () => {
       {isAuthenticated && !isLoading && (
         <Button asChild>
           <Link href="/forms">
-            Enter BlockForms.io
+            Enter BlockNotes.io
             <ArrowRight className="h-4 w-4 ml-2" />
           </Link>
         </Button>

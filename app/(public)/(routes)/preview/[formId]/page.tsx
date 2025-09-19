@@ -11,6 +11,7 @@ import { Cover } from "@/components/cover";
 import { Skeleton } from "@/components/ui/skeleton";
 import Editor from "@/components/editor";
 import { update } from "@/convex/forms";
+import { Button } from "@/components/ui/button";
 
 const FormIdPage = () => {
   const params = useParams();
@@ -55,6 +56,9 @@ const FormIdPage = () => {
           onChange={onChange}
           initialContent={document.content}
         />
+        <Button onClick={() => {}}>
+          Submit
+        </Button>
       </div>
     </div>
   );

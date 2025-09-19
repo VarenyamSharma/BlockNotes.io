@@ -18,9 +18,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "BlockForms.io",
+  title: "BlockNotes.io",
   description:
-    "Generate beautiful forms with a Notion-style interface using BlockForms.io.",
+    "Generate beautiful notes with a Notion-style interface using BlockNotes.io.",
 };
 
 export default function RootLayout({
