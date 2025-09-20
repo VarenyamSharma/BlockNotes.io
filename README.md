@@ -1,8 +1,5 @@
-<<<<<<< HEAD
+
 # BlockNotes.io - Modern Note-Taking Platform
-=======
-# BlockNotes.io - Modern Form Builder & Note-Taking Platform
->>>>>>> e89cfc8f28b82c8740c93f53de7634e827b32294
 
 [![Next.js](https://img.shields.io/badge/Next.js-15.4.6-black?style=flat-square&logo=next.js)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19.1.0-blue?style=flat-square&logo=react)](https://reactjs.org/)
@@ -10,11 +7,8 @@
 [![Convex](https://img.shields.io/badge/Convex-1.27.0-purple?style=flat-square)](https://convex.dev/)
 [![Clerk](https://img.shields.io/badge/Clerk-Auth-green?style=flat-square)](https://clerk.com/)
 
-<<<<<<< HEAD
 A modern, full-stack note-taking application built with Next.js 15, featuring real-time collaboration, rich text editing, and seamless user authentication. BlockNotes.io provides a unified workspace for productivity with Notion-style editing capabilities.
-=======
-A modern, full-stack form builder and note-taking application built with Next.js 15, featuring real-time collaboration, rich text editing, and seamless user authentication. BlockNotes.io combines the power of Notion-style editing with form creation capabilities, providing a unified workspace for productivity.
->>>>>>> e89cfc8f28b82c8740c93f53de7634e827b32294
+
 
 ## ✨ Features
 
@@ -24,7 +18,7 @@ A modern, full-stack form builder and note-taking application built with Next.js
 - **Rich Formatting**: Support for headings, lists, code blocks, and more
 - **Emoji Picker**: Enhanced user experience with emoji support
 
-<<<<<<< HEAD
+
 ### 🔐 **Authentication & Security**
 - **Clerk Integration**: Secure user authentication and management
 - **Role-based Access**: User-specific document access and permissions
@@ -181,7 +175,6 @@ A modern, full-stack form builder and note-taking application built with Next.js
    cd blocknotes
    ```
 
-<<<<<<< HEAD
 ## 🔧 Available Scripts
 
 - `npm run dev` - Start development server with Turbopack
