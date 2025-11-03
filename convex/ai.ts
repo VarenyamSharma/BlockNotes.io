@@ -18,18 +18,20 @@ export const summarize = action({
     }
 
     // 2. Prepare the request to the Gemini API.
-    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
     const requestBody = {
-      contents: [
-        {
-          parts: [
-            {
-              // The prompt for the AI model.
-              text: `Please provide a concise summary of the following note content:\n\n${content}`,
-            },
-          ],
-        },
-      ],
+      model: "gemini-pro",  // Using gemini-pro instead of gemini-2.5-flash for better reliability
+      contents: [{
+        parts: [{
+          text: `Summarize the following content in 2-3 short sentences:\n\n${content}\n\nKeep the summary under 100 words.`
+        }]
+      }],
+      generationConfig: {
+        temperature: 0.3,
+        maxOutputTokens: 2048,
+        topK: 40,
+        topP: 0.95
+      }
     };
 
     // 3. Make the API call.
@@ -49,12 +51,45 @@ export const summarize = action({
 
     // 5. Parse the response and return the summary.
     const data = await response.json();
-    const summary = data.candidates?.[0]?.content?.parts?.[0]?.text;
+    
+    // Detailed debug logging
+    console.log("Full API Response:", JSON.stringify(data, null, 2));
 
-    if (!summary) {
-      throw new Error("Could not extract summary from the API response.");
+    if (!data) {
+      throw new Error("Empty response from API");
     }
 
-    return summary;
+    // Check for API error messages
+    if (data.error) {
+      throw new Error(`API Error: ${data.error.message}`);
+    }
+
+    if (!data.candidates || data.candidates.length === 0) {
+      throw new Error("No candidates in the API response");
+    }
+
+    const candidate = data.candidates[0];
+    console.log("First candidate:", JSON.stringify(candidate, null, 2));
+
+    if (candidate.finishReason === "MAX_TOKENS") {
+      console.log("Warning: Response was truncated due to max tokens limit");
+    }
+
+    const candidateContent = candidate.content;
+    if (!candidateContent) {
+      throw new Error("No content in candidate response");
+    }
+
+    // Extract text from content
+    let text = "";
+    if (candidateContent.parts && candidateContent.parts.length > 0) {
+      text = candidateContent.parts[0].text;
+    }
+
+    if (!text) {
+      throw new Error(`No text found in response. Full candidate structure: ${JSON.stringify(candidate)}`);
+    }
+
+    return text.trim();
   },
 });
