@@ -147,7 +147,7 @@ const Navigation = () => {
     });
     toast.promise(promise, {
       loading: "Creating...",
-      success: "Form created successfully!",
+      success: "Note created successfully!",
       error: "Failed to create.",
     });
   };

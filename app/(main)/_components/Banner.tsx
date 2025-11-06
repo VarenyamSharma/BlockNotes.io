@@ -24,8 +24,8 @@ export const Banner = ({ documentId }: BannerProps) => {
 
     toast.promise(promise, {
       loading: "Deleting form...",
-      success: "Form Deleted",
-      error: "Failed to delete form",
+      success: "Note Deleted",
+      error: "Failed to delete note",
     });
   };
 
@@ -33,8 +33,8 @@ export const Banner = ({ documentId }: BannerProps) => {
     const promise = restore({ documentId });
     toast.promise(promise, {
       loading: "Restoring form...",
-      success: "Form Restored",
-      error: "Failed to restore form",
+      success: "Note Restored",
+      error: "Failed to restore note",
     });
   };
 
@@ -46,7 +46,7 @@ export const Banner = ({ documentId }: BannerProps) => {
       role="alert"
       className="w-full bg-rose-500 text-center text-sm p-2 text-white flex gap-x-2 justify-center"
     >
-      <p>This form is in the Trash.</p>
+      <p>This Note is in the Trash.</p>
 
       {/* Restore Button */}
       <Button
@@ -55,7 +55,7 @@ export const Banner = ({ documentId }: BannerProps) => {
         variant="outline"
         className={buttonClasses}
       >
-        Restore Form
+        Restore Note
       </Button>
 
       {/* Delete Button */}
@@ -65,7 +65,7 @@ export const Banner = ({ documentId }: BannerProps) => {
           variant="outline"
           className={`${buttonClasses} hover:bg-red-600`}
         >
-          Delete Form
+          Delete Note
         </Button>
       </ConfirmModal>
     </section>

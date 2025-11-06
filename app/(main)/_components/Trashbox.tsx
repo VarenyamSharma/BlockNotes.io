@@ -37,7 +37,7 @@ export const Trashbox = () => {
 
     toast.promise(promise, {
       loading: "Restoring form...",
-      success: "Form restored",
+      success: "Note restored",
       error: "Error restoring form",
     });
   };
@@ -47,7 +47,7 @@ export const Trashbox = () => {
 
     toast.promise(promise, {
       loading: "Deleting form...",
-      success: "Form deleted",
+      success: "Note deleted",
       error: "Error deleting form",
     });
 
@@ -78,7 +78,7 @@ export const Trashbox = () => {
 
       <div className="mt-2 px-1 pb-1">
         <p className="hidden last:block text-xs text-center text-muted-foreground">
-          No forms in trashbox
+          No Note in trashbox
         </p>
 
         {filterDocuments?.map((document) => (

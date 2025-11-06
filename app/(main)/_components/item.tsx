@@ -65,8 +65,8 @@ export const Item = ({
     const promise = archive({ documentId: id });
     toast.promise(promise, {
       loading: "Moving to trash...",
-      success: "Form moved to trash",
-      error: "Error archiving form",
+      success: "Note moved to trash",
+      error: "Error archiving note ",
     });
 
     router.push("/forms");

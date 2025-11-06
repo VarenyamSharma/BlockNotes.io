@@ -35,8 +35,8 @@ export const Publish = ({ initialData }: PublishProps) => {
 
     toast.promise(promise, {
       loading: "Publishing...",
-      success: "Form published!",
-      error: "Error publishing the form",
+      success: "note published!",
+      error: "Error publishing the note",
     });
   };
 
@@ -50,8 +50,8 @@ export const Publish = ({ initialData }: PublishProps) => {
 
     toast.promise(promise, {
       loading: "UnPublishing...",
-      success: "Form unpublished!",
-      error: "Error unpublishing the form",
+      success: "Note unpublished!",
+      error: "Error unpublishing the note",
     });
   };
 
@@ -78,7 +78,7 @@ export const Publish = ({ initialData }: PublishProps) => {
             <div className="flex items-center gap-x-2">
                 <Globe className="w-4 h-4 text-sky-500 animate-pulse" />
                 <p className="text-xs fornt-medium text-sky-500">
-                    This Form is live on web
+                    This Note is live on web
                 </p>
             </div>
             <div className="flex items-center">
@@ -111,7 +111,7 @@ export const Publish = ({ initialData }: PublishProps) => {
             <Globe className="h-8 w-8 text-muted-foreground mb-2" />
             <p className="text-sm text-center mb-2">Publish this Form</p>
             <span className="text-xs text-muted-foreground mb-4">
-              Share your Form with others
+              Share your Note with others
             </span>
             <Button
               disabled={isSubmitting}

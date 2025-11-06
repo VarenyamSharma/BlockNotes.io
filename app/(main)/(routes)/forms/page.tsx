@@ -20,8 +20,8 @@ const FormPage = () => {
 
     toast.promise(promise, {
       loading: "Creating...",
-      success: "Form created!",
-      error: "Error creating form."
+      success: "Note created!",
+      error: "Error creating note."
     });
   }
 
