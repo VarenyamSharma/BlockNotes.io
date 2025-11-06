@@ -195,3 +195,4 @@ For support, please email support@blocknotes.io or join our Discord community.
 -----
 
 **Built with ❤️ by the BlockNotes.io Team**
+ 
