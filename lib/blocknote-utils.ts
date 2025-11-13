@@ -8,10 +8,10 @@ type BlockNoteBlock = {
   content?: Array<{
     type: string;
     text?: string;
-    [key: string]: any;
+    [key: string]: unknown;
   }>;
   children?: BlockNoteBlock[];
-  [key: string]: any;
+  [key: string]: unknown;
 };
 
 /**
