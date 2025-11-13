@@ -2,7 +2,6 @@
 
 import { api } from "@/convex/_generated/api";
 import { useSearch } from "@/hooks/use-search";
-import { useUser } from "@clerk/clerk-react";
 import { useQuery } from "convex/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -17,7 +16,6 @@ import {
 import { File } from "lucide-react";
 
 export const SearchCommand = () => {
-  const { user } = useUser();
   const router = useRouter();
   const documents = useQuery(api.forms.getSearch);
   const toggle = useSearch((store) => store.toggle);

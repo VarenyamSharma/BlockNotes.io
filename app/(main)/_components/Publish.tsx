@@ -12,7 +12,7 @@ import { Doc } from "@/convex/_generated/dataModel";
 import { useOrigin } from "@/hooks/use-origin";
 import { useMutation } from "convex/react";
 import { Check, Copy, Globe } from "lucide-react";
-import { use, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 
 interface PublishProps {

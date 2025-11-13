@@ -9,7 +9,6 @@ import { sanitizeId } from '@/lib/utils';
 import React from 'react'
 import { Title } from './title';
 import { Spinner } from '@/components/spinner';
-import { Banner } from './Banner';
 import { Publish } from './Publish';
 
 interface NavbarProps {

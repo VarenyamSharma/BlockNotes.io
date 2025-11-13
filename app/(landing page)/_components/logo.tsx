@@ -1,12 +1,5 @@
 import React from "react";
-import { Poppins } from "next/font/google";
-import { cn } from "@/lib/utils";
 import Image from "next/image";
-
-const font = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "600"],
-});
 
 const Logo = () => {
   return (

@@ -6,7 +6,7 @@ import { useQuery, useAction, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { sanitizeId } from "@/lib/utils";
-import { QuizData, QuizQuestion } from "@/convex/ai";
+import { QuizData } from "@/convex/ai";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 

@@ -1,7 +1,8 @@
 "use client";
 
-import React, { ElementRef, useEffect, useRef, useState } from "react";
+import React, { ElementRef, useCallback, useEffect, useRef, useState } from "react";
 import Link from 'next/link';
+import Image from 'next/image';
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { useTheme } from 'next-themes';
 import { useMediaQuery } from "usehooks-ts";
@@ -55,21 +56,6 @@ const Navigation = () => {
 
   const create = useMutation(api.forms.create);
 
-  // Collapse/Expand based on screen size
-  useEffect(() => {
-    if (isMobile) {
-      collapse();
-    } else {
-      resetWidth();
-    }
-  }, [isMobile]);
-
-  useEffect(() => {
-    if (isMobile) {
-      collapse();
-    }
-  }, [pathname, isMobile]);
-
   // Mouse drag start
   const handleMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -106,7 +92,7 @@ const Navigation = () => {
   };
 
   // Reset to default expanded sidebar
-  const resetWidth = () => {
+  const resetWidth = useCallback(() => {
     if (sidebarRef.current && navbarRef.current) {
       setIsCollapsed(false);
       setIsResetting(true);
@@ -120,10 +106,10 @@ const Navigation = () => {
 
       setTimeout(() => setIsResetting(false), 300);
     }
-  };
+  }, [isMobile]);
 
   // Collapse sidebar
-  const collapse = () => {
+  const collapse = useCallback(() => {
     if (sidebarRef.current && navbarRef.current) {
       setIsCollapsed(true);
       setIsResetting(true);
@@ -134,7 +120,22 @@ const Navigation = () => {
 
       setTimeout(() => setIsResetting(false), 300);
     }
-  };
+  }, []);
+
+  // Collapse/Expand based on screen size
+  useEffect(() => {
+    if (isMobile) {
+      collapse();
+    } else {
+      resetWidth();
+    }
+  }, [isMobile, collapse, resetWidth]);
+
+  useEffect(() => {
+    if (isMobile) {
+      collapse();
+    }
+  }, [pathname, isMobile, collapse]);
 
   // Close sidebar on Escape key
   useEffect(() => {
@@ -143,7 +144,7 @@ const Navigation = () => {
     };
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isCollapsed]);
+  }, [isCollapsed, collapse]);
 
   // Handle new form creation
   const handleCreate = () => {
@@ -188,9 +189,11 @@ const Navigation = () => {
           {/* Logo — clickable, navigates to home */}
           <div className="px-3 py-3">
             <Link href="/" className="flex items-center gap-x-2">
-              <img
+              <Image
                 src={resolvedTheme === 'dark' ? '/logo-dark.svg' : '/logo.svg'}
                 alt="Home"
+                width={32}
+                height={32}
                 className="h-8 w-auto"
               />
             </Link>
@@ -261,7 +264,7 @@ const Navigation = () => {
           </DialogHeader>
           <div className="py-4">
             <p className="text-sm text-muted-foreground text-center">
-              The "Notes from Source" feature is currently under development and will be available soon!
+              The &quot;Notes from Source&quot; feature is currently under development and will be available soon!
             </p>
           </div>
         </DialogContent>

@@ -21,8 +21,6 @@ import {
   ChevronRight,
   LucideIcon,
   MoreHorizontal,
-  MoreVertical,
-  Plus,
   Trash,
   ClipboardList,
 } from "lucide-react";

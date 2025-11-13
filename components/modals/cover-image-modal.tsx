@@ -10,7 +10,6 @@ import { api } from "@/convex/_generated/api";
 import { useParams } from "next/navigation";
 import { sanitizeId } from "@/lib/utils";
 import { Id } from "@/convex/_generated/dataModel";
-import { on } from "events";
 
 export const CoverImageModal = () => {
   const coverImage = useCoverImage();

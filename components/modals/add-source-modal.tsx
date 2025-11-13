@@ -373,7 +373,6 @@ export const AddSourceModal = () => {
       const blocks = lines.map((line, index) => {
         const isHeading1 = line.startsWith("# ");
         const isHeading2 = line.startsWith("## ");
-        const isListItem = line.startsWith("- ");
         
         return {
           id: `block-${Date.now()}-${index}-${Math.random().toString(36).slice(2)}`,
