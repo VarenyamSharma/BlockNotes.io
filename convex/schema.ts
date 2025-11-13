@@ -13,5 +13,13 @@ export default defineSchema ({
         isPublished: v.boolean(),
     })
     .index("by_user", ["userId"])
-    .index("by_user_parent", ["userId","parentDocument"])
+    .index("by_user_parent", ["userId","parentDocument"]),
+    quizResponses: defineTable({
+        formId: v.id("forms"),
+        name: v.string(),
+        email: v.string(),
+        score: v.number(),
+        total: v.number(),
+    })
+    .index("by_form", ["formId"])
 });

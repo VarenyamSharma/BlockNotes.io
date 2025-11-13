@@ -1,5 +1,4 @@
 "use client";
-import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
@@ -7,20 +6,30 @@ import { cn } from "@/lib/utils";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@radix-ui/react-dropdown-menu";
-import { useMutation } from "convex/react";
+} from "@/components/ui/dropdown-menu";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { useMutation, useQuery } from "convex/react";
 import {
   ChevronDown,
   ChevronRight,
   LucideIcon,
   MoreHorizontal,
+  MoreVertical,
   Plus,
   Trash,
+  ClipboardList,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import { toast } from "sonner";
+import { QuizResults } from "@/app/(main)/_components/QuizResults";
 
 interface ItemProps {
   id?: Id<"forms">;
@@ -58,6 +67,13 @@ export const Item = ({
   const Chevronicon = expanded ? ChevronDown : ChevronRight;
   const archive = useMutation(api.forms.archive);
   const router = useRouter();
+  const [isResponsesDialogOpen, setIsResponsesDialogOpen] = useState(false);
+  
+  // Get document data to check if it's published
+  const document = useQuery(
+    api.forms.getById,
+    id ? { documentId: id } : "skip"
+  );
 
   const onArchive = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.stopPropagation();
@@ -108,13 +124,47 @@ export const Item = ({
 
       {!!id && (
         <div className="ml-auto flex items-center gap-x-2">
-           <div 
-          role="button"
-          onClick={onArchive}
-          className="opacity-0 group-hover:opacity-100 h-full ml-auto rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600 ">
+          {document?.isPublished && (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <div
+                  role="button"
+                  onClick={(e) => e.stopPropagation()}
+                  className="opacity-0 group-hover:opacity-100 h-full rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600 p-1"
+                >
+                  <MoreHorizontal className="h-4 w-4 text-muted-foreground" />
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48" onClick={(e) => e.stopPropagation()}>
+                <DropdownMenuItem onClick={() => setIsResponsesDialogOpen(true)}>
+                  <ClipboardList className="h-4 w-4 mr-2" />
+                  Responses
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
+          <div 
+            role="button"
+            onClick={onArchive}
+            className="opacity-0 group-hover:opacity-100 h-full rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600 p-1"
+          >
             <Trash className="h-4 w-4 text-red-500" />
           </div> 
         </div>
+      )}
+
+      {/* Quiz Responses Dialog */}
+      {document?.isPublished && id && (
+        <Dialog open={isResponsesDialogOpen} onOpenChange={setIsResponsesDialogOpen}>
+          <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>Quiz Responses</DialogTitle>
+            </DialogHeader>
+            <div className="mt-4">
+              <QuizResults formId={id} hideTitle={true} />
+            </div>
+          </DialogContent>
+        </Dialog>
       )}
     </div>
   );

@@ -10,6 +10,7 @@ import { sanitizeId } from '@/lib/utils';
 import { Cover } from "@/components/cover";
 import { Skeleton } from "@/components/ui/skeleton";
 import Editor from "@/components/editor";
+import { QuizResults } from "@/app/(main)/_components/QuizResults";
 
 const FormIdPage = () => {
   const params = useParams();
@@ -53,6 +54,11 @@ const FormIdPage = () => {
           onChange={onChange}
           initialContent={document.content}
         />
+        
+        {/* Show quiz results only if the note is published */}
+        {document.isPublished && (
+          <QuizResults formId={document._id} />
+        )}
       </div>
     </div>
   );

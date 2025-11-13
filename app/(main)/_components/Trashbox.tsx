@@ -36,9 +36,9 @@ export const Trashbox = () => {
     const promise = restore({ documentId });
 
     toast.promise(promise, {
-      loading: "Restoring form...",
+      loading: "Restoring notes...",
       success: "Note restored",
-      error: "Error restoring form",
+      error: "Error restoring notes",
     });
   };
 
@@ -46,9 +46,9 @@ export const Trashbox = () => {
     const promise = remove({ documentId });
 
     toast.promise(promise, {
-      loading: "Deleting form...",
+      loading: "Deleting notes...",
       success: "Note deleted",
-      error: "Error deleting form",
+      error: "Error deleting notes",
     });
 
     if (params.formId === documentId) {

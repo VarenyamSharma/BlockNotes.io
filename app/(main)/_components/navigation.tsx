@@ -14,6 +14,7 @@ import {
   Search,
   Settings,
   Trash,
+  FilePlus,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -26,6 +27,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Trashbox } from "./Trashbox";
 import { useSearch } from "@/hooks/use-search";
 import { Navbar } from "./Navbar";
@@ -44,6 +51,7 @@ const Navigation = () => {
 
   const [isResetting, setIsResetting] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(isMobile);
+  const [isComingSoonDialogOpen, setIsComingSoonDialogOpen] = useState(false);
 
   const create = useMutation(api.forms.create);
 
@@ -192,6 +200,7 @@ const Navigation = () => {
           <Item label="Search" icon={Search} isSearch onClick={search.onOpen} />
           <Item label="Settings" icon={Settings} onClick={() => {}} />
           <Item onClick={handleCreate} label="New Note" icon={PlusCircle} />
+          <Item onClick={() => setIsComingSoonDialogOpen(true)} label="Notes from Source" icon={FilePlus} />
         </div>
 
         <div className="mt-4">
@@ -243,6 +252,20 @@ const Navigation = () => {
           </nav>
         )}
       </div>
+
+      {/* Coming Soon Dialog */}
+      <Dialog open={isComingSoonDialogOpen} onOpenChange={setIsComingSoonDialogOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Coming Soon</DialogTitle>
+          </DialogHeader>
+          <div className="py-4">
+            <p className="text-sm text-muted-foreground text-center">
+              The "Notes from Source" feature is currently under development and will be available soon!
+            </p>
+          </div>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };

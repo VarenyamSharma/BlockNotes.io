@@ -1,12 +1,12 @@
 # BlockNotes.io - Modern Note-Taking Platform
 
-[](https://nextjs.org/)
-[](https://reactjs.org/)
-[](https://www.typescriptlang.org/)
-[](https://convex.dev/)
-[](https://clerk.com/)
+![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)
+![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript)
+![Convex](https://img.shields.io/badge/Convex-1.27-FF4D00?style=for-the-badge)
+![Clerk](https://img.shields.io/badge/Clerk-Auth-6C47FF?style=for-the-badge)
 
-A modern, full-stack note-taking application built with Next.js 15, featuring rich text editing and seamless user authentication. BlockNotes.io provides a unified workspace for productivity with Notion-style editing capabilities.
+A modern, full-stack note-taking application built with Next.js 15, featuring rich text editing, AI-powered quiz generation, and seamless user authentication. BlockNotes.io provides a unified workspace for productivity with Notion-style editing capabilities and interactive learning features.
 
 ## ✨ Features
 
@@ -15,6 +15,8 @@ A modern, full-stack note-taking application built with Next.js 15, featuring ri
   - **BlockNote Integration**: Advanced block-based editor with drag-and-drop functionality.
   - **Rich Formatting**: Support for headings, lists, code blocks, and more.
   - **Emoji Picker**: Enhanced user experience with emoji support.
+  - **Icon Customization**: Custom icons for documents and notes.
+  - **Cover Images**: Upload and manage cover images for visual appeal.
 
 ### 🔐 **Authentication & Security**
 
@@ -35,6 +37,18 @@ A modern, full-stack note-taking application built with Next.js 15, featuring ri
   - **Archive System**: Soft delete with restore functionality.
   - **Trash Management**: Permanent deletion with confirmation.
   - **Smart Navigation**: Breadcrumb navigation and sidebar organization.
+
+### 🤖 **AI-Powered Features**
+
+  - **Quiz Generation**: Automatically generate interactive quizzes from note content using AI.
+  - **Quiz Response Tracking**: Collect and track quiz responses with scores.
+  - **Public Quiz Access**: Share quizzes with others via public links.
+
+### 📤 **Publishing & Sharing**
+
+  - **Public Publishing**: Publish notes to the web with shareable links.
+  - **Preview Mode**: Preview published notes before sharing.
+  - **Quiz Integration**: Convert notes into interactive quizzes for learning.
 
 ## 🚀 Tech Stack
 
@@ -64,6 +78,11 @@ A modern, full-stack note-taking application built with Next.js 15, featuring ri
   - **React Dropzone** - File upload handling
   - **Sonner** - Toast notifications
   - **Zustand** - State management
+
+### **AI & Learning**
+
+  - **Convex Actions** - Server-side AI processing for quiz generation
+  - **Quiz System** - Interactive quiz creation and response tracking
 
 ## 📦 Installation
 
@@ -103,9 +122,12 @@ A modern, full-stack note-taking application built with Next.js 15, featuring ri
     CONVEX_DEPLOYMENT=your_convex_deployment_url
     NEXT_PUBLIC_CONVEX_URL=your_convex_url
 
-    # EdgeStore (Optional)
+    # EdgeStore (Optional - for file uploads)
     EDGE_STORE_ACCESS_KEY=your_edgestore_access_key
     EDGE_STORE_SECRET_KEY=your_edgestore_secret_key
+
+    # AI/OpenAI (Optional - for quiz generation)
+    OPENAI_API_KEY=your_openai_api_key
     ```
 
 4.  **Initialize Convex**
@@ -124,11 +146,46 @@ A modern, full-stack note-taking application built with Next.js 15, featuring ri
     ```
 
 6.  **Open your browser**
-    Navigate to [http://localhost:3000](https://www.google.com/search?q=http://localhost:3000).
+    Navigate to [http://localhost:3000](http://localhost:3000).
 
 ## 🏗️ Project Structure
 
-The project follows a standard Next.js App Router structure. Core logic for the backend is located in the `convex/` directory, while frontend components are organized within `components/`.
+```
+BlockNotes.io/
+├── app/                          # Next.js App Router
+│   ├── (landing page)/          # Public landing page
+│   │   └── _components/         # Landing page components
+│   ├── (main)/                  # Main application routes
+│   │   ├── (routes)/
+│   │   │   └── forms/           # Forms/Notes management
+│   │   └── _components/         # Main app components
+│   ├── (public)/                # Public routes
+│   │   └── (routes)/
+│   │       ├── preview/         # Public note preview
+│   │       └── quiz/            # Public quiz interface
+│   └── api/                     # API routes
+│       └── edgestore/           # File upload handling
+├── components/                   # Reusable UI components
+│   ├── ui/                      # shadcn/ui components
+│   │   └── providers/           # Context providers
+│   ├── modals/                  # Modal components
+│   └── upload/                  # Upload components
+├── convex/                      # Convex backend
+│   ├── schema.ts               # Database schema
+│   ├── forms.ts                # Forms/Notes mutations & queries
+│   ├── ai.ts                   # AI quiz generation
+│   └── auth.convex.ts          # Authentication
+├── hooks/                       # Custom React hooks
+├── lib/                         # Utility functions
+└── public/                      # Static assets
+```
+
+### Key Directories
+
+- **`convex/`**: Contains all backend logic including database schema, mutations, queries, and AI actions
+- **`app/(main)/`**: Main application interface with navigation, document list, and editing
+- **`app/(public)/`**: Public-facing routes for previewing and taking quizzes
+- **`components/`**: Reusable UI components built with Radix UI and Tailwind CSS
 
 ## 🔧 Available Scripts
 
@@ -141,7 +198,7 @@ The project follows a standard Next.js App Router structure. Core logic for the 
 
 ### Theming
 
-The application supports both light and dark themes. You can customize the theme settings in `components/providers/theme-provider.tsx`.
+The application supports both light and dark themes. You can customize the theme settings in `components/ui/providers/theme-providers.tsx`.
 
 ### Styling
 
@@ -178,7 +235,7 @@ The application can be deployed to any platform that supports Next.js, such as:
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](https://www.google.com/search?q=LICENSE) file for details.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## 🙏 Acknowledgments
 
@@ -190,9 +247,34 @@ This project is licensed under the MIT License - see the [LICENSE](https://www.g
 
 ## 📞 Support
 
-For support, please email support@blocknotes.io or join our Discord community.
+For support, please email support@blocknotes.io or open an issue on GitHub.
+
+## 🎯 Key Features in Detail
+
+### Document Management
+- Create, edit, and organize notes in a hierarchical structure
+- Support for nested documents (parent-child relationships)
+- Archive and restore functionality
+- Permanent deletion with trash management
+
+### Rich Text Editing
+- BlockNote editor with full formatting support
+- Drag-and-drop block reordering
+- Code blocks, lists, headings, and more
+- Real-time auto-save functionality
+
+### Quiz System
+- AI-powered quiz generation from note content
+- Multiple-choice questions automatically generated
+- Score tracking and response collection
+- Public quiz links for sharing
+
+### Publishing
+- Publish notes to the web with unique URLs
+- Preview mode before publishing
+- Copy shareable links
+- Unpublish functionality
 
 -----
 
 **Built with ❤️ by the BlockNotes.io Team**
- 

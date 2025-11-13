@@ -265,3 +265,66 @@ export const removeImage = mutation({
     return existingForm;
   },
 });
+
+export const saveQuizResponse = mutation({
+  args: {
+    formId: v.id("forms"),
+    name: v.string(),
+    email: v.string(),
+    score: v.number(),
+    total: v.number(),
+  },
+  handler: async (ctx, args) => {
+    // Verify the form exists and is published
+    const form = await ctx.db.get(args.formId);
+    if (!form) {
+      throw new Error("Form not found");
+    }
+    if (!form.isPublished) {
+      throw new Error("Form is not published");
+    }
+
+    // Save the quiz response
+    const response = await ctx.db.insert("quizResponses", {
+      formId: args.formId,
+      name: args.name,
+      email: args.email,
+      score: args.score,
+      total: args.total,
+    });
+
+    return response;
+  },
+});
+
+export const getQuizResponses = query({
+  args: {
+    formId: v.id("forms"),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      throw new Error("Not authenticated");
+    }
+
+    const userId = identity.subject;
+
+    // Verify the form exists and user owns it
+    const form = await ctx.db.get(args.formId);
+    if (!form) {
+      throw new Error("Form not found");
+    }
+    if (form.userId !== userId) {
+      throw new Error("Not authorized");
+    }
+
+    // Get all responses for this form
+    const responses = await ctx.db
+      .query("quizResponses")
+      .withIndex("by_form", (q) => q.eq("formId", args.formId))
+      .order("desc")
+      .collect();
+
+    return responses;
+  },
+});
